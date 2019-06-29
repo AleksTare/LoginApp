@@ -5,7 +5,7 @@ import jbr.springmvc.model.User;
 
 public interface UserService {
 
-    void register(User user);
+    boolean register(User user);
 
     User validateUser(Login login);
 

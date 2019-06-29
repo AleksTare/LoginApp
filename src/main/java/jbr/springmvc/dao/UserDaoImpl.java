@@ -13,10 +13,18 @@ public class UserDaoImpl implements UserDao {
     DataSource datasource;
     @Autowired
     JdbcTemplate jdbcTemplate;
-    public void register(User user) {
-        String sql = "insert into users values(?,?,?,?,?,?,?)";
-        jdbcTemplate.update(sql, new Object[] { user.getUsername(), user.getPassword(), user.getFirstname(),
-                user.getLastname(), user.getEmail(), user.getAddress(), user.getPhone() });
+    public boolean register(User user) {
+        String sql = "select * from users where email='" + user.getEmail() + "'";
+        List<User> users = jdbcTemplate.query(sql, new UserMapper());
+        if(users.size() > 0){
+            return false;
+        }
+        else {
+            sql = "insert into users values(?,?,?,?,?,?,?)";
+            jdbcTemplate.update(sql, new Object[]{user.getUsername(), user.getPassword(), user.getFirstname(),
+                    user.getLastname(), user.getEmail(), user.getAddress(), user.getPhone()});
+            return true;
+        }
     }
     public User validateUser(Login login) {
         if(login.getPassword().equals("") || login.getUsername().equals("")) return null;
