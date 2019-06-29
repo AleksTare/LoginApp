@@ -19,6 +19,7 @@ public class UserDaoImpl implements UserDao {
                 user.getLastname(), user.getEmail(), user.getAddress(), user.getPhone() });
     }
     public User validateUser(Login login) {
+        if(login.getPassword().equals("") || login.getUsername().equals("")) return null;
         String sql = "select * from users where username='" + login.getUsername() + "' and password='" + login.getPassword() + "'";
         List<User> users = jdbcTemplate.query(sql, new UserMapper());
         return users.size() > 0 ? users.get(0) : null;

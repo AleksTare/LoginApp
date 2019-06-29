@@ -49,4 +49,10 @@ public class User {
     public void setPhone(int phone) {
         this.phone = phone;
     }
+
+    public boolean invalidateRegister(){
+        return (this.username.equals("") || this.password.equals("") || this.firstname.equals("") ||
+                this.lastname.equals("") || this.email.equals("") || this.address.equals("") || this.phone==0);
+    }
+
 }
